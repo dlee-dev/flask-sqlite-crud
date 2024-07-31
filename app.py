@@ -1,7 +1,5 @@
 from flask import Flask, render_template, request, redirect, url_for
 import sqlite3
-import atexit
-import os
 
 app = Flask(__name__)
 
@@ -51,15 +49,5 @@ def edit_post(id):
     conn.close()
     return render_template('edit.html', post=post)
 
-def clear_database():
-    if os.path.exists('database.db'):
-        os.remove('database.db')
-
-@app.teardown_appcontext
-def teardown(exception):
-    clear_database()
-
 if __name__ == '__main__':
-    # Register the clear_database function to run on exit
-    atexit.register(clear_database)
     app.run(debug=True)
